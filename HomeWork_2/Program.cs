@@ -3,46 +3,17 @@
 // M = 1; N = 15 -> 120
 // M = 4; N = 8. -> 30
 
-﻿Console.WriteLine("Чтобы найти сумму натуральных чисел от M до N:");
-Console.Write("Введите натуральное число M: ");
-string m = Console.ReadLine();
-
-Console.Write("Введите натуральное число N: ");
-string n = Console.ReadLine();
-
-var numberM = ExceptionHandling(m);
-var numberN = ExceptionHandling(n);
-
-if (numberM.exception && numberN.exception && numberM.number >= 0 && numberN.number >= 0)
+int SumOfNumbers(int M, int N)
 {
-    if (numberM.number < numberN.number)
-    {
-        Console.WriteLine($"Сумма = {Summa(numberM.number, numberN.number)}");
-    }
-    else
-    {
-        Console.WriteLine($"Сумма = {Summa(numberN.number, numberM.number)}");
-    }
-    
-}
-else
-{
-    Console.ForegroundColor = ConsoleColor.DarkRed;
-    Console.WriteLine($"{m}, {n} -> Некорректный ввод!");
+    if(M > N) return 0;
+    else if(M == N) return M;
+    return M + SumOfNumbers(M + 1, N);
 }
 
-int Summa(int firstNumber, int lastNumber)
-{
-    if (lastNumber >= firstNumber) return (lastNumber) + Summa(firstNumber, --lastNumber);
-    return 0;  
-}
+Console.Write("Введите число M: ");
+int M = Convert.ToInt32(Console.ReadLine());
 
-(bool exception, int number) ExceptionHandling(string number)
-{
-    bool yesInt = int.TryParse(number, out int d);
-    if (!yesInt)
-    {
-        return (false, d);
-    }
-    return (true, d);
-}
+Console.Write("Введите число N: ");
+int N = Convert.ToInt32(Console.ReadLine());
+
+Console.WriteLine($"Сумма цифр от {M} до {N} равна: {SumOfNumbers(M, N)}\n");
